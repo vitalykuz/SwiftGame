@@ -15,58 +15,55 @@ class GameScene: SKScene {
     //keeps the list of all bubbles images (textures) I have in assests folder
     var bubbleTextures = [SKTexture]()
     // the current bubble in list
-    var currentBubbleImage = 0
+    var currentBubbleTextureInArrayOfBubbles = 0
     var maximumNumber = 1
     var bubbles = [SKSpriteNode]()
     var bubbleTimer = Timer()
+	var count0 = 0, count1 = 0, count2 = 0, count3 = 0, count4 = 0, countDefault  = 0
 
     override func didMove(to view: SKView) {
 
         bubbleTextures.append(SKTexture(imageNamed: "bubbleRed"))
-        bubbleTextures.append(SKTexture(imageNamed: "bubbleBlue"))
-        bubbleTextures.append(SKTexture(imageNamed: "bubbleCyan"))
-        bubbleTextures.append(SKTexture(imageNamed: "bubbleGray"))
-        bubbleTextures.append(SKTexture(imageNamed: "bubbleGreen"))
-        bubbleTextures.append(SKTexture(imageNamed: "bubbleOrange"))
         bubbleTextures.append(SKTexture(imageNamed: "bubblePink"))
-        bubbleTextures.append(SKTexture(imageNamed: "bubblePurple"))
+        bubbleTextures.append(SKTexture(imageNamed: "bubbleGreen"))
+        bubbleTextures.append(SKTexture(imageNamed: "bubbleBlue"))
+        bubbleTextures.append(SKTexture(imageNamed: "bubbleOrange"))
+
+        //bubbleTextures.append(SKTexture(imageNamed: "bubbleCyan"))
+        //bubbleTextures.append(SKTexture(imageNamed: "bubblePurple"))
+        //bubbleTextures.append(SKTexture(imageNamed: "bubbleGray"))
+
 
         //SKPhysicsBody is a new data type that stores physical shapes of things. The next line creates a wall that cannot be passed by bubbles
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         // sets the gravity to 0. By default objects fall down like in real world from the top
         physicsWorld.gravity = CGVector.zero
 
-        for _ in 1...8 {
-            createBubble()
-        }
+//        for _ in 1...8 {
+//            createBubble()
+//        }
 
-        bubbleTimer = Timer.scheduledTimer(timeInterval: 3, target: self,
-                selector: #selector(createBubble), userInfo: nil, repeats: true)
+		for _ in 1...15 {
+			generateBubbleWithProbability()
+		}
+
+//        for _ in 1...100 {
+//            let number  =  randomNumber(probabilities: [0.4,0.3,0.15,0.10,0.05])
+//            print(number);
+//        }
+
+
+//        bubbleTimer = Timer.scheduledTimer(timeInterval: 3, target: self,
+//                selector: #selector(createBubble), userInfo: nil, repeats: true)
     }
 
-    func createBubble() {
-
+    func createBubble(with index: Int) {
         // 1. create a new Sprite node from the array of all images (textures)
-        let bubble = SKSpriteNode(texture: bubbleTextures[currentBubbleImage])
-
-        // 2. give the new bubble a string name
-        bubble.name = String(maximumNumber)
+        let bubble = SKSpriteNode(texture: bubbleTextures[index])
 
         // 3. give it the position of z = 1, so that it appears above any background
         bubble.zPosition = 1
 
-        // 4. create a label node with the current number
-        let labelNode = SKLabelNode(fontNamed: "HelveticaNeue-Light")
-        labelNode.text = bubble.name
-        labelNode.color = UIColor.white
-        labelNode.fontSize = 64
-
-        // 5. Make te label center itself vertically and draw above the bubble
-        labelNode.verticalAlignmentMode = .center
-        labelNode.zPosition = 2
-
-        // 6. add the label to the bubble, then the bubble to the game scene
-        bubble.addChild(labelNode)
         addChild(bubble)
 
         // 7. add the new bubble to array of bubbles on screen to later use
@@ -85,17 +82,45 @@ class GameScene: SKScene {
         bubble.run(SKAction.fadeIn(withDuration: 0.5))
 
         configurePhysics(for: bubble)
-        nextBubble()
+    }
+
+    func createBubble() {
+
+        // 1. create a new Sprite node from the array of all images (textures)
+        let bubble = SKSpriteNode(texture: bubbleTextures[currentBubbleTextureInArrayOfBubbles])
+
+        // 3. give it the position of z = 1, so that it appears above any background
+        bubble.zPosition = 1
+
+        addChild(bubble)
+
+        // 7. add the new bubble to array of bubbles on screen to later use
+        bubbles.append(bubble)
+
+        // 8. make it appear somewhere randomly inside the game screen
+        let xPosition = GKARC4RandomSource.sharedRandom().nextInt(upperBound: 800)
+        let yPosition = GKARC4RandomSource.sharedRandom().nextInt(upperBound: 1300)
+
+        bubble.position = CGPoint(x: xPosition, y: yPosition)
+
+        let scale = CGFloat(GKRandomSource.sharedRandom().nextUniform())
+        bubble.setScale(max(0.7, scale))
+
+        bubble.alpha = 0
+        bubble.run(SKAction.fadeIn(withDuration: 0.5))
+
+        configurePhysics(for: bubble)
+        //nextBubble()
     }
 
     func nextBubble() {
 
         //move on to the next bubble texture
-        currentBubbleImage += 1
+        currentBubbleTextureInArrayOfBubbles += 1
 
         //if we've used all the bubble textures, start at the beginning
-        if currentBubbleImage == bubbleTextures.count {
-            currentBubbleImage = 0
+        if currentBubbleTextureInArrayOfBubbles == bubbleTextures.count {
+            currentBubbleTextureInArrayOfBubbles = 0
         }
 
         //add a random number between 1 and 3 to maximumNumber
@@ -164,43 +189,75 @@ class GameScene: SKScene {
 		let touchLocation = touch.location(in: self)
 		
 		//let clickedBubble = nodes(at: touchLocation)
-		
 
-		        let clickedNodes = nodes(at: touchLocation).filter {
-		            $0.name != nil
-		        }
-		
-		        //make sure at least one clicked node remains
-		        guard clickedNodes.count != 0 else {
-		            return
-		        }
-		
-		        //find the lowest-numbered bubble on the screen
-		        let lowestBubble = bubbles.min {
-		            Int($0.name!)! < Int($1.name!)!
-		        }
-		        guard let bestNumber = lowestBubble?.name else {
-		            return
-		        }
-		
-		        //go through all nodes the user clicked to see if any of them is the best number
-		        for node in clickedNodes {
-		            if node.name == bestNumber {
-		                //they were correct - pop the bubble!
-		                pop(node as! SKSpriteNode)
-		
-		                //exit the method so we don't create new bubbles
-		                return
-		            }
-		        }
-		//if we're still here it means they were incorrect; create two penalty bubbles
-		        createBubble()
-		        createBubble()
-	}
-	
+        let clickedNodes = nodes(at: touchLocation).filter {
+            $0.name != nil
+        }
+
+        //make sure at least one clicked node remains
+        guard clickedNodes.count != 0 else {
+            return
+        }
+
+        //go through all nodes the user clicked to see if any of them is the best number
+        for node in clickedNodes {
+                pop(node as! SKSpriteNode)
+                return
+        }
+    }
+
+    func randomPermille() -> Int {
+        return Int(arc4random_uniform(1000))
+    }
+
+
+    func generateBubbleWithProbability() {
+
+		let number  =  randomNumber(probabilities: [0.4,0.3,0.15,0.10,0.05])
+		print(number);
+
+        createBubble(with: number)
+//        switch (number) {
+//        case 0:
+//			count0 += 1
+//            print("Red bubble: \(count0)")
+//            createBubble(with: number)
+//		case 1:
+//            count1 += 1
+//            print("Pink bubble:  \(count1)")
+//        case 2:
+//            count2 += 1
+//            print("Green: \(count2)")
+//        case 3:
+//            count3 += 1
+//            print("Blue: \(count3)")
+//		case 4:
+//			count4 += 1
+//			print("Black: \(count4)")
+//        default:
+//            countDefault += 1
+//            print("Default \(countDefault)")
+//        }
+    }
+
+    func randomNumber(probabilities: [Double]) -> Int {
+
+        // Sum of all probabilities (so that we don't have to require that the sum is 1.0):
+        let sum = probabilities.reduce(0, +)
+        // Random number in the range 0.0 <= rnd < sum :
+        let rnd = sum * Double(arc4random_uniform(UInt32.max)) / Double(UInt32.max)
+        // Find the first interval of accumulated probabilities into which `rnd` falls:
+        var accum = 0.0
+        for (i, p) in probabilities.enumerated() {
+            accum += p
+            if rnd < accum {
+                return i
+            }
+        }
+        // This point might be reached due to floating point inaccuracies:
+        return (probabilities.count - 1)
+    }
 }
-
-
 
 
 
