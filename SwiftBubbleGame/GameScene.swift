@@ -19,7 +19,6 @@ class GameScene: SKScene {
     var maximumNumber = 1
     var bubbles = [SKSpriteNode]()
     var bubbleTimer = Timer()
-	var count0 = 0, count1 = 0, count2 = 0, count3 = 0, count4 = 0, countDefault  = 0
 
     override func didMove(to view: SKView) {
 
@@ -46,12 +45,6 @@ class GameScene: SKScene {
 		for _ in 1...15 {
 			generateBubbleWithProbability()
 		}
-
-//        for _ in 1...100 {
-//            let number  =  randomNumber(probabilities: [0.4,0.3,0.15,0.10,0.05])
-//            print(number);
-//        }
-
 
 //        bubbleTimer = Timer.scheduledTimer(timeInterval: 3, target: self,
 //                selector: #selector(createBubble), userInfo: nil, repeats: true)
@@ -82,60 +75,6 @@ class GameScene: SKScene {
         bubble.run(SKAction.fadeIn(withDuration: 0.5))
 
         configurePhysics(for: bubble)
-    }
-
-    func createBubble() {
-
-        // 1. create a new Sprite node from the array of all images (textures)
-        let bubble = SKSpriteNode(texture: bubbleTextures[currentBubbleTextureInArrayOfBubbles])
-
-        // 3. give it the position of z = 1, so that it appears above any background
-        bubble.zPosition = 1
-
-        addChild(bubble)
-
-        // 7. add the new bubble to array of bubbles on screen to later use
-        bubbles.append(bubble)
-
-        // 8. make it appear somewhere randomly inside the game screen
-        let xPosition = GKARC4RandomSource.sharedRandom().nextInt(upperBound: 800)
-        let yPosition = GKARC4RandomSource.sharedRandom().nextInt(upperBound: 1300)
-
-        bubble.position = CGPoint(x: xPosition, y: yPosition)
-
-        let scale = CGFloat(GKRandomSource.sharedRandom().nextUniform())
-        bubble.setScale(max(0.7, scale))
-
-        bubble.alpha = 0
-        bubble.run(SKAction.fadeIn(withDuration: 0.5))
-
-        configurePhysics(for: bubble)
-        //nextBubble()
-    }
-
-    func nextBubble() {
-
-        //move on to the next bubble texture
-        currentBubbleTextureInArrayOfBubbles += 1
-
-        //if we've used all the bubble textures, start at the beginning
-        if currentBubbleTextureInArrayOfBubbles == bubbleTextures.count {
-            currentBubbleTextureInArrayOfBubbles = 0
-        }
-
-        //add a random number between 1 and 3 to maximumNumber
-        maximumNumber += GKRandomSource.sharedRandom().nextInt(upperBound: 3) + 1
-
-        //fix the mystery problem
-        let strMaximumNumber = String(maximumNumber)
-
-        if strMaximumNumber.characters.last! == "6" {
-            maximumNumber += 1
-        }
-
-        if strMaximumNumber.characters.last! == "9" {
-            maximumNumber += 1
-        }
     }
 
     func configurePhysics(for bubble: SKSpriteNode) {
@@ -181,67 +120,27 @@ class GameScene: SKScene {
 
     }
 
-	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		// 1 - Choose one of the touches to work with
 		guard let touch = touches.first else {
 			return
 		}
 		let touchLocation = touch.location(in: self)
-		
-		//let clickedBubble = nodes(at: touchLocation)
+        let clickedBubble = nodes(at: touchLocation)
 
-        let clickedNodes = nodes(at: touchLocation).filter {
-            $0.name != nil
-        }
-
-        //make sure at least one clicked node remains
-        guard clickedNodes.count != 0 else {
-            return
-        }
-
-        //go through all nodes the user clicked to see if any of them is the best number
-        for node in clickedNodes {
-                pop(node as! SKSpriteNode)
-                return
-        }
+		for node in clickedBubble {
+			pop(node as! SKSpriteNode)
+			return
+		}
     }
-
-    func randomPermille() -> Int {
-        return Int(arc4random_uniform(1000))
-    }
-
 
     func generateBubbleWithProbability() {
-
 		let number  =  randomNumber(probabilities: [0.4,0.3,0.15,0.10,0.05])
-		print(number);
-
         createBubble(with: number)
-//        switch (number) {
-//        case 0:
-//			count0 += 1
-//            print("Red bubble: \(count0)")
-//            createBubble(with: number)
-//		case 1:
-//            count1 += 1
-//            print("Pink bubble:  \(count1)")
-//        case 2:
-//            count2 += 1
-//            print("Green: \(count2)")
-//        case 3:
-//            count3 += 1
-//            print("Blue: \(count3)")
-//		case 4:
-//			count4 += 1
-//			print("Black: \(count4)")
-//        default:
-//            countDefault += 1
-//            print("Default \(countDefault)")
-//        }
     }
 
+    // code was found on http://stackoverflow.com/questions/30309556/generate-random-numbers-with-a-given-distribution
     func randomNumber(probabilities: [Double]) -> Int {
-
         // Sum of all probabilities (so that we don't have to require that the sum is 1.0):
         let sum = probabilities.reduce(0, +)
         // Random number in the range 0.0 <= rnd < sum :
