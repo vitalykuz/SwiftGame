@@ -19,8 +19,9 @@ class NameScene: SKScene {
 		
 		self.addChild(button)
 
-		let label = self.childNode(withName: "label") as? SKLabelNode
-		label?.text = "It works"
+		//let label = self.childNode(withName: "label") as? SKLabelNode
+
+		setupLabel()
 	}
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -40,5 +41,15 @@ class NameScene: SKScene {
 			secondScene.scaleMode = SKSceneScaleMode.aspectFill
 			self.scene!.view?.presentScene(secondScene, transition: transition)
 		}
- }
+	}
+	
+	func setupLabel() {
+		let label = self.childNode(withName: "label") as? SKLabelNode
+
+		label?.fontName = "Chalkduster"
+		label?.text = "You Win!"
+		label?.fontSize = 65
+		label?.fontColor = SKColor.green
+
+	}
 }
