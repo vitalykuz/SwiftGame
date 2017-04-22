@@ -9,8 +9,11 @@
 import SpriteKit
 import GameplayKit
 import UIKit
+import Foundation
 
 class GameScene: SKScene {
+	
+	weak var viewController: MenuViewController!
 
     //keeps the list of all bubbles images (textures) I have in assests folder
     var bubbleTextures = [SKTexture]()
@@ -19,6 +22,12 @@ class GameScene: SKScene {
     var maximumNumber = 1
     var bubbles = [SKSpriteNode]()
     var bubbleTimer = Timer()
+    //let timerLabel = childNode(withName: "timerLabel") as? SKLabelNode
+    var timerLabel: SKLabelNode?
+    var scoreLabel: SKLabelNode?
+    var score: Int = 0
+    var timer: Timer!
+    var timerCount = 60
 
     override func didMove(to view: SKView) {
 
@@ -38,17 +47,37 @@ class GameScene: SKScene {
         // sets the gravity to 0. By default objects fall down like in real world from the top
         physicsWorld.gravity = CGVector.zero
 
-//        for _ in 1...8 {
-//            createBubble()
-//        }
 
 		for _ in 1...15 {
 			generateBubbleWithProbability()
 		}
+		
+		createLabels()
 
-//        bubbleTimer = Timer.scheduledTimer(timeInterval: 3, target: self,
-//                selector: #selector(createBubble), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
     }
+
+    func updateTimer() {
+        timerCount -= 1
+        timerLabel?.text = "Timer: \(timerCount)"
+    }
+	
+	func createLabels() {
+
+        timerLabel = self.childNode(withName: "timerLabel") as? SKLabelNode
+        //creates a timer label
+		timerLabel?.fontName = "Chalkduster"
+		timerLabel?.fontSize = 45
+		//timerLabel?.fontColor = SKColor.green
+
+        //creates a score label
+        scoreLabel = self.childNode(withName: "scoreLabel") as? SKLabelNode
+        scoreLabel?.fontName = "Chalkduster"
+        scoreLabel?.fontSize = 45
+        scoreLabel?.text = "Score: \(score)"
+        //scoreLabel?.fontColor = SKColor.green
+		
+	}
 
     func createBubble(with index: Int) {
         // 1. create a new Sprite node from the array of all images (textures)
@@ -119,17 +148,21 @@ class GameScene: SKScene {
     }
 
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-		// 1 - Choose one of the touches to work with
-		guard let touch = touches.first else {
-			return
-		}
-		let touchLocation = touch.location(in: self)
-        let clickedBubble = nodes(at: touchLocation)
 
-		for node in clickedBubble {
-			pop(node as! SKSpriteNode)
-			return
-		}
+        let touch:UITouch = touches.first! as UITouch
+        let positionInScene = touch.location(in: self)
+        let touchedNode = self.atPoint(positionInScene)
+
+        if let name = touchedNode.name
+        {
+            if name == "timerLabel" || name == "scoreLabel"
+            {
+                touchedNode.isUserInteractionEnabled = false
+            } else {
+                pop(touchedNode as! SKSpriteNode)
+                return
+            }
+        }
     }
 
     func generateBubbleWithProbability() {

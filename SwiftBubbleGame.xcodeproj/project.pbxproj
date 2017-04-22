@@ -7,27 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D8446FFF1EAAFC0500349696 /* NameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D8446FFE1EAAFC0500349696 /* NameScene.sks */; };
-		D84470051EAAFDC300349696 /* NameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84470041EAAFDC300349696 /* NameScene.swift */; };
+		D8446FFF1EAAFC0500349696 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D8446FFE1EAAFC0500349696 /* MenuScene.sks */; };
+		D84470051EAAFDC300349696 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84470041EAAFDC300349696 /* MenuScene.swift */; };
 		D84605501EA9AE3D00A22C80 /* pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = D846054F1EA9AE3D00A22C80 /* pop.wav */; };
 		D8F43B861EA9A845007B34EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F43B851EA9A845007B34EC /* AppDelegate.swift */; };
 		D8F43B881EA9A845007B34EC /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D8F43B871EA9A845007B34EC /* GameScene.sks */; };
 		D8F43B8C1EA9A845007B34EC /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F43B8B1EA9A845007B34EC /* GameScene.swift */; };
-		D8F43B8E1EA9A845007B34EC /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F43B8D1EA9A845007B34EC /* GameViewController.swift */; };
+		D8F43B8E1EA9A845007B34EC /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F43B8D1EA9A845007B34EC /* MenuViewController.swift */; };
 		D8F43B911EA9A845007B34EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8F43B8F1EA9A845007B34EC /* Main.storyboard */; };
 		D8F43B931EA9A845007B34EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8F43B921EA9A845007B34EC /* Assets.xcassets */; };
 		D8F43B961EA9A845007B34EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8F43B941EA9A845007B34EC /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		D8446FFE1EAAFC0500349696 /* NameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = NameScene.sks; sourceTree = "<group>"; };
-		D84470041EAAFDC300349696 /* NameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameScene.swift; sourceTree = "<group>"; };
+		D8446FFE1EAAFC0500349696 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
+		D84470041EAAFDC300349696 /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		D846054F1EA9AE3D00A22C80 /* pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pop.wav; sourceTree = "<group>"; };
 		D8F43B821EA9A845007B34EC /* SwiftBubbleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftBubbleGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8F43B851EA9A845007B34EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8F43B871EA9A845007B34EC /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		D8F43B8B1EA9A845007B34EC /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		D8F43B8D1EA9A845007B34EC /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		D8F43B8D1EA9A845007B34EC /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		D8F43B901EA9A845007B34EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D8F43B921EA9A845007B34EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D8F43B951EA9A845007B34EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -67,14 +67,14 @@
 				D8F43B851EA9A845007B34EC /* AppDelegate.swift */,
 				D8F43B871EA9A845007B34EC /* GameScene.sks */,
 				D8F43B8B1EA9A845007B34EC /* GameScene.swift */,
-				D8F43B8D1EA9A845007B34EC /* GameViewController.swift */,
+				D8F43B8D1EA9A845007B34EC /* MenuViewController.swift */,
 				D8F43B8F1EA9A845007B34EC /* Main.storyboard */,
 				D8F43B921EA9A845007B34EC /* Assets.xcassets */,
 				D8F43B941EA9A845007B34EC /* LaunchScreen.storyboard */,
 				D8F43B971EA9A845007B34EC /* Info.plist */,
 				D846054F1EA9AE3D00A22C80 /* pop.wav */,
-				D8446FFE1EAAFC0500349696 /* NameScene.sks */,
-				D84470041EAAFDC300349696 /* NameScene.swift */,
+				D8446FFE1EAAFC0500349696 /* MenuScene.sks */,
+				D84470041EAAFDC300349696 /* MenuScene.swift */,
 			);
 			path = SwiftBubbleGame;
 			sourceTree = "<group>";
@@ -144,7 +144,7 @@
 				D84605501EA9AE3D00A22C80 /* pop.wav in Resources */,
 				D8F43B931EA9A845007B34EC /* Assets.xcassets in Resources */,
 				D8F43B961EA9A845007B34EC /* LaunchScreen.storyboard in Resources */,
-				D8446FFF1EAAFC0500349696 /* NameScene.sks in Resources */,
+				D8446FFF1EAAFC0500349696 /* MenuScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,8 +156,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8F43B8C1EA9A845007B34EC /* GameScene.swift in Sources */,
-				D84470051EAAFDC300349696 /* NameScene.swift in Sources */,
-				D8F43B8E1EA9A845007B34EC /* GameViewController.swift in Sources */,
+				D84470051EAAFDC300349696 /* MenuScene.swift in Sources */,
+				D8F43B8E1EA9A845007B34EC /* MenuViewController.swift in Sources */,
 				D8F43B861EA9A845007B34EC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

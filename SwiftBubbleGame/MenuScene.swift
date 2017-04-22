@@ -1,5 +1,5 @@
 //
-//  NameScene.swift
+//  MenuScene.swift
 //  SwiftBubbleGame
 //
 //  Created by Vitaly Kuzenkov on 22/4/17.
@@ -9,7 +9,9 @@
 import UIKit
 import SpriteKit
 
-class NameScene: SKScene {
+class MenuScene: SKScene {
+	
+	
 
 	override func didMove(to view: SKView) {
 		/* Setup your scene here */
