@@ -53,6 +53,8 @@ class GameScene: SKScene {
     func createBubble(with index: Int) {
         // 1. create a new Sprite node from the array of all images (textures)
         let bubble = SKSpriteNode(texture: bubbleTextures[index])
+        bubble.name = String(index)
+        print("Bubble name: \(String(describing: bubble.name))")
 
         // 3. give it the position of z = 1, so that it appears above any background
         bubble.zPosition = 1
@@ -113,10 +115,6 @@ class GameScene: SKScene {
         node.run(sequence)
 
         run(SKAction.playSoundFileNamed("pop.wav", waitForCompletion: false))
-
-        if bubbles.count == 0 {
-            bubbleTimer.invalidate()
-        }
 
     }
 
