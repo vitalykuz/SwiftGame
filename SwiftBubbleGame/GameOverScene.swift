@@ -26,6 +26,8 @@ class GameOverScene: SKScene {
     var userName: String!
 
     override func didMove(to view: SKView) {
+        print("User name in gameOver: \(userName)")
+
         setUpLabelsAndScores()
 
         //timerLabel = self.childNode(withName: "timerLabel") as? SKLabelNode
@@ -47,8 +49,9 @@ class GameOverScene: SKScene {
 
         yourBestLabel = self.childNode(withName: "yourBestLabel") as? SKLabelNode
 
+
         playAgainButton = self.childNode(withName: "playAgainImage") as? SKSpriteNode
-        //playAgainButton.name = "playAgainButton"
+        //playAgainButton.texture = SKTexture(imageNamed: "playAgainImage")
 
         setUpFont(for: nameLabel)
         setUpFont(for: gameOverLabel)
@@ -94,7 +97,8 @@ class GameOverScene: SKScene {
                         scene.scaleMode = .aspectFill
 
                         currentGame = scene as! GameScene
-
+                        currentGame.bestScore = self.bestScore
+                        currentGame.userName = self.userName
                         // Present the scene
                         view.presentScene(scene)
 

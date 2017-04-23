@@ -25,11 +25,13 @@ class GameScene: SKScene {
     var timerLabel: SKLabelNode?
     var scoreLabel: SKLabelNode?
     var score: Int = 0
+    var bestScore: Int = 0
     var timer: Timer!
-    var timerCount = 5
-    var userName: String!
+    var timerCount = 3
+    var userName: String! = ""
 
     override func didMove(to view: SKView) {
+        print("User name in Game: \(userName)")
 
         bubbleTextures.append(SKTexture(imageNamed: "bubbleRed"))
         bubbleTextures.append(SKTexture(imageNamed: "bubblePink"))
@@ -79,6 +81,8 @@ class GameScene: SKScene {
 
                 gameOverScene = scene as! GameOverScene
                 gameOverScene.score = self.score
+                gameOverScene.userName = self.userName
+                gameOverScene.bestScore = self.bestScore
                 gameOverScene.userName = self.userName
                 // Present the scene
                 view.presentScene(scene)
@@ -154,9 +158,6 @@ class GameScene: SKScene {
     }
 
     func pop(_ node: SKSpriteNode) {
-
-
-
         guard let index = bubbles.index(of: node) else {
             return
         }

@@ -25,6 +25,29 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
         self.nameTextField.delegate = self;
     }
 
+	@IBAction func settingsButtonClicked(_ sender: Any) {
+		let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
+		alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+		self.present(alert, animated: true, completion: nil)
+		
+//		alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
+//			switch action.style{
+//			case .Default:
+//				print("default")
+//				
+//			case .Cancel:
+//				print("cancel")
+//				
+//			case .Destructive:
+//				print("destructive")
+//			}
+//		}))
+	}
+	
+	@IBAction func statButtonClicked(_ sender: Any) {
+		
+	}
+	
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
