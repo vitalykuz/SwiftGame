@@ -14,6 +14,7 @@ import Foundation
 class GameScene: SKScene {
 	
 	weak var viewController: MenuViewController!
+    var gameOverScene: GameOverScene!
 
     //keeps the list of all bubbles images (textures) I have in assests folder
     var bubbleTextures = [SKTexture]()
@@ -21,13 +22,12 @@ class GameScene: SKScene {
     var currentBubbleTextureInArrayOfBubbles = 0
     var maximumNumber = 1
     var bubbles = [SKSpriteNode]()
-    var bubbleTimer = Timer()
-    //let timerLabel = childNode(withName: "timerLabel") as? SKLabelNode
     var timerLabel: SKLabelNode?
     var scoreLabel: SKLabelNode?
     var score: Int = 0
     var timer: Timer!
-    var timerCount = 60
+    var timerCount = 5
+    var userName: String!
 
     override func didMove(to view: SKView) {
 
@@ -35,11 +35,11 @@ class GameScene: SKScene {
         bubbleTextures.append(SKTexture(imageNamed: "bubblePink"))
         bubbleTextures.append(SKTexture(imageNamed: "bubbleGreen"))
         bubbleTextures.append(SKTexture(imageNamed: "bubbleBlue"))
-        bubbleTextures.append(SKTexture(imageNamed: "bubbleOrange"))
+        bubbleTextures.append(SKTexture(imageNamed: "bubbleGray"))
 
         //bubbleTextures.append(SKTexture(imageNamed: "bubbleCyan"))
         //bubbleTextures.append(SKTexture(imageNamed: "bubblePurple"))
-        //bubbleTextures.append(SKTexture(imageNamed: "bubbleGray"))
+        //bubbleTextures.append(SKTexture(imageNamed: "bubbleOrange"))
 
 
         //SKPhysicsBody is a new data type that stores physical shapes of things. The next line creates a wall that cannot be passed by bubbles
@@ -58,8 +58,36 @@ class GameScene: SKScene {
     }
 
     func updateTimer() {
+        if (timerCount == 0) {
+            gameOver()
+            return
+        }
         timerCount -= 1
         timerLabel?.text = "Timer: \(timerCount)"
+    }
+
+
+
+    func gameOver() {
+        timer.invalidate()
+
+        if let view = self.view {
+            // Load the SKScene from 'GameScene.sks'
+            if let scene = SKScene(fileNamed: "GameOverScene") {
+                // Set the scale mode to scale to fit the window
+                scene.scaleMode = .aspectFill
+
+                gameOverScene = scene as! GameOverScene
+                gameOverScene.score = self.score
+                gameOverScene.userName = self.userName
+                // Present the scene
+                view.presentScene(scene)
+            }
+
+            view.ignoresSiblingOrder = true
+            view.showsFPS = true
+            view.showsNodeCount = true
+        }
     }
 	
 	func createLabels() {
@@ -127,10 +155,14 @@ class GameScene: SKScene {
 
     func pop(_ node: SKSpriteNode) {
 
+
+
         guard let index = bubbles.index(of: node) else {
             return
         }
         bubbles.remove(at: index)
+
+        calculateScore(node)
 
         node.physicsBody = nil
         node.name = nil
@@ -186,6 +218,22 @@ class GameScene: SKScene {
         }
         // This point might be reached due to floating point inaccuracies:
         return (probabilities.count - 1)
+    }
+
+    func calculateScore(_ node: SKSpriteNode) {
+
+        if (node.name == "0") {
+            score += 1
+        } else if (node.name == "1") {
+            score += 2
+        } else if (node.name == "2") {
+            score += 5
+        } else if (node.name == "3") {
+            score += 8
+        } else if (node.name == "4") {
+            score += 10
+        }
+        scoreLabel?.text = "Score: \(score)"
     }
 }
 

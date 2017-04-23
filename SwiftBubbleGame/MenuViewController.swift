@@ -13,6 +13,8 @@ import GameplayKit
 class MenuViewController: UIViewController, UITextFieldDelegate {
 	
 	var currentGame: GameScene!
+    var gameOverScene: GameOverScene!
+    var userName: String!
 	@IBOutlet var nameTextField: UITextField!
 	@IBOutlet var nameLabel: UILabel!
 	@IBOutlet var playButton: UIButton!
@@ -20,12 +22,7 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		
-		
-
         self.nameTextField.delegate = self;
-	
-		
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -39,11 +36,18 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
 			if let scene = SKScene(fileNamed: "GameScene") {
 				// Set the scale mode to scale to fit the window
 				scene.scaleMode = .aspectFill
-				
+
+                currentGame = scene as! GameScene
+                currentGame.viewController = self
+
+                //TO_DO: check if name is not empty
+                userName = nameTextField.text
+                print("User name in controller: \(userName)")
+                currentGame.userName = userName
+
 				// Present the scene
 				view.presentScene(scene)
-				currentGame = scene as! GameScene
-				currentGame.viewController = self
+
 			}
 			
 			view.ignoresSiblingOrder = true
@@ -51,7 +55,7 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
 			view.showsFPS = true
 			view.showsNodeCount = true
 		}
-		
+
 		self.nameTextField.isHidden = true
 		self.playButton.isHidden = true
 		self.nameLabel.isHidden = true
