@@ -27,11 +27,11 @@ class GameScene: SKScene {
     var score: Int = 0
     var bestScore: Int = 0
     var timer: Timer!
-    var timerCount = 3
+    var timerCount = 10
     var userName: String! = ""
 
     override func didMove(to view: SKView) {
-        print("User name in Game: \(userName)")
+        //print("User name in Game: \(userName)")
 
         bubbleTextures.append(SKTexture(imageNamed: "bubbleRed"))
         bubbleTextures.append(SKTexture(imageNamed: "bubblePink"))
@@ -50,9 +50,7 @@ class GameScene: SKScene {
         physicsWorld.gravity = CGVector.zero
 
 
-		for _ in 1...15 {
-			generateBubbleWithProbability()
-		}
+		createRandomBubbles(maxNumberOfBubbles: 15)
 		
 		createLabels()
 
@@ -66,9 +64,28 @@ class GameScene: SKScene {
         }
         timerCount -= 1
         timerLabel?.text = "Timer: \(timerCount)"
+
+        removeBubbleFromScreen()
+        createRandomBubbles(maxNumberOfBubbles: 15)
     }
 
+    func removeBubbleFromScreen() {
 
+        for bubble in bubbles {
+            bubble.removeFromParent()
+        }
+        bubbles.removeAll()
+    }
+
+    func createRandomBubbles(maxNumberOfBubbles: Int) {
+
+        let diceRoll = Int(arc4random_uniform(UInt32(maxNumberOfBubbles)) + 1)
+        print("Dice roll: \(diceRoll)")
+        for _ in 1...diceRoll {
+            print("Dice: \(diceRoll)")
+            generateBubbleWithProbability()
+        }
+    }
 
     func gameOver() {
         timer.invalidate()
@@ -112,10 +129,12 @@ class GameScene: SKScene {
 	}
 
     func createBubble(with index: Int) {
+        //print("I am in create bubble")
+
         // 1. create a new Sprite node from the array of all images (textures)
         let bubble = SKSpriteNode(texture: bubbleTextures[index])
         bubble.name = String(index)
-        print("Bubble name: \(String(describing: bubble.name))")
+        //print("Bubble name: \(bubble.name)")
 
         // 3. give it the position of z = 1, so that it appears above any background
         bubble.zPosition = 1
@@ -141,6 +160,7 @@ class GameScene: SKScene {
     }
 
     func configurePhysics(for bubble: SKSpriteNode) {
+        //print("I am in configu physics")
 
         bubble.physicsBody = SKPhysicsBody(circleOfRadius: bubble.size.width / 2)
         bubble.physicsBody?.linearDamping = 0.0
@@ -200,6 +220,7 @@ class GameScene: SKScene {
 
     func generateBubbleWithProbability() {
 		let number  =  randomNumber(probabilities: [0.4,0.3,0.15,0.10,0.05])
+        print("I am in generateBubble. Random number: \(number)")
         createBubble(with: number)
     }
 

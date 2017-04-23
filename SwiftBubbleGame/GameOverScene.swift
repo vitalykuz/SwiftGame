@@ -26,7 +26,7 @@ class GameOverScene: SKScene {
     var userName: String!
 
     override func didMove(to view: SKView) {
-        print("User name in gameOver: \(userName)")
+        //print("User name in gameOver: \(userName)")
 
         setUpLabelsAndScores()
 

@@ -12,7 +12,6 @@
         <!--Menu View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
                 <viewController id="BV1-FR-VrT" customClass="MenuViewController" customModule="SwiftBubbleGame" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8aa-yV-Osq"/>
@@ -44,7 +43,7 @@
                                         </constraints>
                                         <state key="normal" image="startButton"/>
                                         <connections>
-                                            <action selector="nextSceneButtonClicked:" destination="BV1-FR-VrT" eventType="touchUpInside" id="AoQ-Pp-p9d"/>
+                                            <action selector="nextSceneButtonClicked:" destination="BV1-FR-VrT" eventType="touchUpInside" id="eG8-ro-KwM"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fK0-2K-Ybo">
@@ -92,9 +91,12 @@
                     <connections>
                         <outlet property="nameLabel" destination="Xtl-AL-YNi" id="nVR-RK-lKc"/>
                         <outlet property="nameTextField" destination="GKt-42-RdP" id="uf8-qi-Xn9"/>
-                        <outlet property="playButton" destination="e0O-h4-AEL" id="UsT-Ka-NJV"/>
+                        <outlet property="playButton" destination="e0O-h4-AEL" id="Zg7-tP-hQh"/>
+                        <outlet property="settingsButton" destination="fK0-2K-Ybo" id="q3W-Yl-nRk"/>
+                        <outlet property="statButton" destination="14w-mp-flX" id="dbO-Le-4MI"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="24.800000000000001" y="34.632683658170919"/>
         </scene>

@@ -18,6 +18,8 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
 	@IBOutlet var nameTextField: UITextField!
 	@IBOutlet var nameLabel: UILabel!
 	@IBOutlet var playButton: UIButton!
+	@IBOutlet var statButton: UIButton!
+	@IBOutlet var settingsButton: UIButton!
 
 
     override func viewDidLoad() {
@@ -34,18 +36,19 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
 //			switch action.style{
 //			case .Default:
 //				print("default")
-//				
+//
 //			case .Cancel:
 //				print("cancel")
-//				
+//
 //			case .Destructive:
 //				print("destructive")
 //			}
 //		}))
 	}
-	
+
+
 	@IBAction func statButtonClicked(_ sender: Any) {
-		
+
 	}
 	
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -78,6 +81,9 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
 			view.showsFPS = true
 			view.showsNodeCount = true
 		}
+
+        self.settingsButton.isHidden = true
+        self.statButton.isHidden = true
 
 		self.nameTextField.isHidden = true
 		self.playButton.isHidden = true
