@@ -29,6 +29,11 @@ class GameScene: SKScene {
     var timer: Timer!
     var timerCount = 10
     var userName: String! = ""
+    var maxNumberOfBubbles: Int = 15
+
+    func GameScene() {
+
+    }
 
     override func didMove(to view: SKView) {
         //print("User name in Game: \(userName)")
@@ -50,7 +55,7 @@ class GameScene: SKScene {
         physicsWorld.gravity = CGVector.zero
 
 
-		createRandomBubbles(maxNumberOfBubbles: 15)
+		createRandomBubbles(maxNumberOfBubbles: maxNumberOfBubbles)
 		
 		createLabels()
 
@@ -66,7 +71,7 @@ class GameScene: SKScene {
         timerLabel?.text = "Timer: \(timerCount)"
 
         removeBubbleFromScreen()
-        createRandomBubbles(maxNumberOfBubbles: 15)
+        createRandomBubbles(maxNumberOfBubbles: maxNumberOfBubbles)
     }
 
     func removeBubbleFromScreen() {
@@ -117,6 +122,7 @@ class GameScene: SKScene {
         //creates a timer label
 		timerLabel?.fontName = "Chalkduster"
 		timerLabel?.fontSize = 45
+        timerLabel?.text = "Timer: \(timerCount)"
 		//timerLabel?.fontColor = SKColor.green
 
         //creates a score label
@@ -220,7 +226,7 @@ class GameScene: SKScene {
 
     func generateBubbleWithProbability() {
 		let number  =  randomNumber(probabilities: [0.4,0.3,0.15,0.10,0.05])
-        print("I am in generateBubble. Random number: \(number)")
+        //print("I am in generateBubble. Random number: \(number)")
         createBubble(with: number)
     }
 

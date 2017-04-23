@@ -12,25 +12,55 @@ import GameplayKit
 
 class MenuViewController: UIViewController, UITextFieldDelegate {
 	
+	@IBOutlet var settingsView: UIView!
+	@IBOutlet var mainView: SKView!
 	var currentGame: GameScene!
     var gameOverScene: GameOverScene!
     var userName: String!
+    var numberOfBubblesInGame: Int! = 15
+    var gameSeconds: Int! = 60
 	@IBOutlet var nameTextField: UITextField!
 	@IBOutlet var nameLabel: UILabel!
 	@IBOutlet var playButton: UIButton!
 	@IBOutlet var statButton: UIButton!
 	@IBOutlet var settingsButton: UIButton!
+	@IBOutlet var gameTimeLabel: UILabel!
+	@IBOutlet var numberOfBubblesLabel: UILabel!
+	@IBOutlet var gameSlider: UISlider!
+	@IBOutlet var bubblesSlider: UISlider!
+	
 
+	
+	@IBAction func okSettingButtonClicked(_ sender: Any) {
+        self.numberOfBubblesInGame = Int(bubblesSlider.value)
+        print("Number of bubbles in slider: \(bubblesSlider.value)")
+        print("numberOfBubblesInGame \(numberOfBubblesInGame)")
+        self.gameSeconds = Int(gameSlider.value)
+        print("gameSeconds \(gameSeconds)")
+        print("Game seconds in slider : \(gameSlider.value)")
+
+        settingsView.isHidden = true
+	}
+	
+	@IBAction func gameSliderChangedValue(_ sender: Any) {
+        gameTimeLabel.text = "Game time:   \(Int((gameSlider.value)))"
+
+	}
+
+	@IBAction func bubblesSliderChangedValue(_ sender: Any) {
+        numberOfBubblesLabel.text = "Bubbles in game: \(Int(bubblesSlider.value))"
+	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.nameTextField.delegate = self;
+        self.title = "menuView"
+        settingsView.isHidden = true
     }
 
 	@IBAction func settingsButtonClicked(_ sender: Any) {
-		let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
-		alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-		self.present(alert, animated: true, completion: nil)
+        settingsView.isHidden = false
+
 		
 //		alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
 //			switch action.style{
@@ -70,6 +100,9 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
                 userName = nameTextField.text
                 print("User name in controller: \(userName)")
                 currentGame.userName = userName
+                currentGame.timerCount = gameSeconds
+                currentGame.maxNumberOfBubbles = numberOfBubblesInGame
+                currentGame.timerCount = gameSeconds
 
 				// Present the scene
 				view.presentScene(scene)
