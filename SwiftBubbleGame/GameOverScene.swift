@@ -12,8 +12,8 @@ class GameOverScene: SKScene {
 
     var currentGame: GameScene!
 
-    public var score: Int = 0
-    var bestScore: Int = 0
+    public var score: Double = 0
+    var bestScore: Double = 0
 
     var gameOverLabel: SKLabelNode!
     var nameLabel: SKLabelNode!

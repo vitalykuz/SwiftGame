@@ -12,7 +12,8 @@ import UIKit
 import Foundation
 
 struct GameValues {
-	static var score = 0;
+	static var score: Double = 0;
+	static var bestScore: Double = 0;
 	static var userName = "";
 }
 
@@ -23,21 +24,22 @@ class GameScene: SKScene {
 
     //keeps the list of all bubbles images (textures) I have in assests folder
     var bubbleTextures = [SKTexture]()
-    // the current bubble in list
-    var currentBubbleTextureInArrayOfBubbles = 0
+
     var maximumNumber = 1
     var bubbles = [SKSpriteNode]()
     var timerLabel: SKLabelNode?
     var scoreLabel: SKLabelNode?
-    var score: Int = 0
-    var bestScore: Int = 0
+    var score: Double = 0
+    var bestScore: Double = 0
     var timer: Timer!
     var timerCount = 10
     var userName: String! = ""
     var maxNumberOfBubbles: Int = 15
 
-	var previousBubbleClicked = "";
-	var comboMultiplyer = 1;
+	var previouslyClickedBubbleName = ""
+	var currentlyClickedBubbleName = ""
+	var comboMultiplication: Double = 1;
+    var numberOfTheSameBubblesClicked = 0
 	
 
     override func didMove(to view: SKView) {
@@ -81,22 +83,16 @@ class GameScene: SKScene {
 
     func removeBubbleFromScreen() {
 		
-		let diceRoll = Int(arc4random_uniform(UInt32(maxNumberOfBubbles)))
+		let diceRoll = Int(arc4random_uniform(UInt32(bubbles.count)))
 		print("Random number of bubbles to remove: \(diceRoll)")
 		for _ in 0...diceRoll {
-            if(bubbles.count>0) {
+            if(bubbles.count > 0) {
                 let randomIndex = Int(arc4random_uniform(UInt32(bubbles.count - 1)))
-                print("REMOVE:\(randomIndex)")
                 let randomBubble = bubbles[randomIndex]
                 randomBubble.removeFromParent()
                 bubbles.remove(at: randomIndex)
             }
 		}
-		
-//        for bubble in bubbles {
-//            bubble.removeFromParent()
-//        }
-        //bubbles.removeAll()
     }
 
     func createRandomBubbles(maxNumberOfBubbles: Int) {
@@ -106,7 +102,7 @@ class GameScene: SKScene {
         for _ in 0...diceRoll {
             generateBubbleWithProbability()
         }
-		print("GENERATE:\(diceRoll)")
+		print("How many bubbles to create? \(diceRoll)")
 
     }
 
@@ -246,7 +242,6 @@ class GameScene: SKScene {
 
     func generateBubbleWithProbability() {
 		let number  =  randomNumber(probabilities: [0.4,0.3,0.15,0.10,0.05])
-        //print("I am in generateBubble. Random number: \(number)")
         createBubble(with: number)
     }
 
@@ -269,62 +264,37 @@ class GameScene: SKScene {
     }
 
     func calculateScore(_ node: SKSpriteNode) {
-
-		
-		
-		
         if (node.name == "0") {
-			if previousBubbleClicked == node.name {
-				// now i am in combo
-				comboMultiplyer = 2;
-			} else {
-				comboMultiplyer = 1;
-			}
-			
-			if (comboMultiplyer == 2) {
-				run(SKAction.playSoundFileNamed("Unstoppable.mp3", waitForCompletion: false))
-			}
-			previousBubbleClicked = node.name!
-			score += 1 * comboMultiplyer
-            //score += 1
+			calculateCombo(node)
+			score += 1 * comboMultiplication
         } else if (node.name == "1") {
-			if previousBubbleClicked == node.name {
-				// now i am in combo
-				comboMultiplyer = 2;
-			} else {
-				comboMultiplyer = 1;
-			}
-			previousBubbleClicked = node.name!
-            score += 2 * comboMultiplyer
+            calculateCombo(node)
+            score += 2 * comboMultiplication
         } else if (node.name == "2") {
-			if previousBubbleClicked == node.name {
-				// now i am in combo
-				comboMultiplyer = 2;
-			} else {
-				comboMultiplyer = 1;
-			}
-			previousBubbleClicked = node.name!
-            score += 5 * comboMultiplyer
+			calculateCombo(node)
+            score += 5 * comboMultiplication
         } else if (node.name == "3") {
-			if previousBubbleClicked == node.name {
-				// now i am in combo
-				comboMultiplyer = 2;
-			} else {
-				comboMultiplyer = 1;
-			}
-			previousBubbleClicked = node.name!
-            score += 8 * comboMultiplyer
+			calculateCombo(node)
+            score += 8 * comboMultiplication
         } else if (node.name == "4") {
-			if previousBubbleClicked == node.name {
-				// now i am in combo
-				comboMultiplyer = 2;
-			} else {
-				comboMultiplyer = 1;
-			}
-			previousBubbleClicked = node.name!
-            score += 10 * comboMultiplyer
+			calculateCombo(node)
+            score += 10 * comboMultiplication
         }
         scoreLabel?.text = "Score: \(score)"
+    }
+
+    func calculateCombo(_ node: SKSpriteNode) {
+        if currentlyClickedBubbleName == node.name {
+            comboMultiplication = 1.5;
+            numberOfTheSameBubblesClicked += 1
+            if (numberOfTheSameBubblesClicked >= 2) {
+                run(SKAction.playSoundFileNamed("Unstoppable.mp3", waitForCompletion: false))
+            }
+        } else {
+            comboMultiplication = 1;
+            numberOfTheSameBubblesClicked = 0
+        }
+        currentlyClickedBubbleName = node.name!
     }
 }
 
