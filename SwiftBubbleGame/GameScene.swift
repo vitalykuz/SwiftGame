@@ -11,6 +11,11 @@ import GameplayKit
 import UIKit
 import Foundation
 
+struct GameValues {
+	static var score = 0;
+	static var userName = "";
+}
+
 class GameScene: SKScene {
 	
 	weak var viewController: MenuViewController!
@@ -31,9 +36,9 @@ class GameScene: SKScene {
     var userName: String! = ""
     var maxNumberOfBubbles: Int = 15
 
-    func GameScene() {
-
-    }
+	var previousBubbleClicked = "";
+	var comboMultiplyer = 1;
+	
 
     override func didMove(to view: SKView) {
         //print("User name in Game: \(userName)")
@@ -106,6 +111,8 @@ class GameScene: SKScene {
                 gameOverScene.userName = self.userName
                 gameOverScene.bestScore = self.bestScore
                 gameOverScene.userName = self.userName
+
+                //var scene = GameOverScene(gameScene: self)
                 // Present the scene
                 view.presentScene(scene)
             }
@@ -250,16 +257,55 @@ class GameScene: SKScene {
 
     func calculateScore(_ node: SKSpriteNode) {
 
+		
+		
+		
         if (node.name == "0") {
-            score += 1
+			if previousBubbleClicked == node.name {
+				// now i am in combo
+				comboMultiplyer = 2;
+			} else {
+				comboMultiplyer = 1;
+			}
+			previousBubbleClicked = node.name!
+			score += 1 * comboMultiplyer
+            //score += 1
         } else if (node.name == "1") {
-            score += 2
+			if previousBubbleClicked == node.name {
+				// now i am in combo
+				comboMultiplyer = 2;
+			} else {
+				comboMultiplyer = 1;
+			}
+			previousBubbleClicked = node.name!
+            score += 2 * comboMultiplyer
         } else if (node.name == "2") {
-            score += 5
+			if previousBubbleClicked == node.name {
+				// now i am in combo
+				comboMultiplyer = 2;
+			} else {
+				comboMultiplyer = 1;
+			}
+			previousBubbleClicked = node.name!
+            score += 5 * comboMultiplyer
         } else if (node.name == "3") {
-            score += 8
+			if previousBubbleClicked == node.name {
+				// now i am in combo
+				comboMultiplyer = 2;
+			} else {
+				comboMultiplyer = 1;
+			}
+			previousBubbleClicked = node.name!
+            score += 8 * comboMultiplyer
         } else if (node.name == "4") {
-            score += 10
+			if previousBubbleClicked == node.name {
+				// now i am in combo
+				comboMultiplyer = 2;
+			} else {
+				comboMultiplyer = 1;
+			}
+			previousBubbleClicked = node.name!
+            score += 10 * comboMultiplyer
         }
         scoreLabel?.text = "Score: \(score)"
     }

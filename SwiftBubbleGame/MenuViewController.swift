@@ -60,20 +60,6 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
 
 	@IBAction func settingsButtonClicked(_ sender: Any) {
         settingsView.isHidden = false
-
-		
-//		alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
-//			switch action.style{
-//			case .Default:
-//				print("default")
-//
-//			case .Cancel:
-//				print("cancel")
-//
-//			case .Destructive:
-//				print("destructive")
-//			}
-//		}))
 	}
 
 
@@ -104,6 +90,8 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
                 currentGame.maxNumberOfBubbles = numberOfBubblesInGame
                 currentGame.timerCount = gameSeconds
 
+				//GameValues.score
+				
 				// Present the scene
 				view.presentScene(scene)
 
