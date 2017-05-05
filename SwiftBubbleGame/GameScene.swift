@@ -80,21 +80,34 @@ class GameScene: SKScene {
     }
 
     func removeBubbleFromScreen() {
-
-        for bubble in bubbles {
-            bubble.removeFromParent()
-        }
-        bubbles.removeAll()
+		
+		let diceRoll = Int(arc4random_uniform(UInt32(maxNumberOfBubbles)))
+		print("Random number of bubbles to remove: \(diceRoll)")
+		for _ in 0...diceRoll {
+            if(bubbles.count>0) {
+                let randomIndex = Int(arc4random_uniform(UInt32(bubbles.count - 1)))
+                print("REMOVE:\(randomIndex)")
+                let randomBubble = bubbles[randomIndex]
+                randomBubble.removeFromParent()
+                bubbles.remove(at: randomIndex)
+            }
+		}
+		
+//        for bubble in bubbles {
+//            bubble.removeFromParent()
+//        }
+        //bubbles.removeAll()
     }
 
     func createRandomBubbles(maxNumberOfBubbles: Int) {
 
-        let diceRoll = Int(arc4random_uniform(UInt32(maxNumberOfBubbles)) + 1)
-        print("Dice roll: \(diceRoll)")
-        for _ in 1...diceRoll {
-            print("Dice: \(diceRoll)")
+        let diceRoll = Int(arc4random_uniform(UInt32(maxNumberOfBubbles - bubbles.count)))
+		
+        for _ in 0...diceRoll {
             generateBubbleWithProbability()
         }
+		print("GENERATE:\(diceRoll)")
+
     }
 
     func gameOver() {
@@ -266,6 +279,10 @@ class GameScene: SKScene {
 				comboMultiplyer = 2;
 			} else {
 				comboMultiplyer = 1;
+			}
+			
+			if (comboMultiplyer == 2) {
+				run(SKAction.playSoundFileNamed("Unstoppable.mp3", waitForCompletion: false))
 			}
 			previousBubbleClicked = node.name!
 			score += 1 * comboMultiplyer

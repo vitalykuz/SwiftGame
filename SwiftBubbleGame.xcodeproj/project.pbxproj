@@ -13,6 +13,8 @@
 		D84470091EAC09C100349696 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84470081EAC09C100349696 /* GameOverScene.swift */; };
 		D844700B1EAC0A1B00349696 /* GameOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D844700A1EAC0A1B00349696 /* GameOverViewController.swift */; };
 		D84605501EA9AE3D00A22C80 /* pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = D846054F1EA9AE3D00A22C80 /* pop.wav */; };
+		D8858F0B1EBC48CE006DE7DA /* Dominating.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D8858F0A1EBC48CE006DE7DA /* Dominating.mp3 */; };
+		D8AA96261EBC598900B22C41 /* Unstoppable.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D8AA96251EBC598900B22C41 /* Unstoppable.mp3 */; };
 		D8F43B861EA9A845007B34EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F43B851EA9A845007B34EC /* AppDelegate.swift */; };
 		D8F43B881EA9A845007B34EC /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D8F43B871EA9A845007B34EC /* GameScene.sks */; };
 		D8F43B8C1EA9A845007B34EC /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8F43B8B1EA9A845007B34EC /* GameScene.swift */; };
@@ -29,6 +31,8 @@
 		D84470081EAC09C100349696 /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		D844700A1EAC0A1B00349696 /* GameOverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverViewController.swift; sourceTree = "<group>"; };
 		D846054F1EA9AE3D00A22C80 /* pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pop.wav; sourceTree = "<group>"; };
+		D8858F0A1EBC48CE006DE7DA /* Dominating.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = Dominating.mp3; path = SwiftBubbleGame/Dominating.mp3; sourceTree = "<group>"; };
+		D8AA96251EBC598900B22C41 /* Unstoppable.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Unstoppable.mp3; sourceTree = "<group>"; };
 		D8F43B821EA9A845007B34EC /* SwiftBubbleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftBubbleGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8F43B851EA9A845007B34EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8F43B871EA9A845007B34EC /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -51,10 +55,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D8AA96241EBC596000B22C41 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D8858F0A1EBC48CE006DE7DA /* Dominating.mp3 */,
+				D8AA96251EBC598900B22C41 /* Unstoppable.mp3 */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		D8F43B791EA9A844007B34EC = {
 			isa = PBXGroup;
 			children = (
 				D8F43B841EA9A845007B34EC /* SwiftBubbleGame */,
+				D8AA96241EBC596000B22C41 /* Resources */,
 				D8F43B831EA9A845007B34EC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -154,7 +168,9 @@
 				D84605501EA9AE3D00A22C80 /* pop.wav in Resources */,
 				D8F43B931EA9A845007B34EC /* Assets.xcassets in Resources */,
 				D8F43B961EA9A845007B34EC /* LaunchScreen.storyboard in Resources */,
+				D8858F0B1EBC48CE006DE7DA /* Dominating.mp3 in Resources */,
 				D8446FFF1EAAFC0500349696 /* MenuScene.sks in Resources */,
+				D8AA96261EBC598900B22C41 /* Unstoppable.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
