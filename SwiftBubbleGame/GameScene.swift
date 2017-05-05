@@ -72,11 +72,13 @@ class GameScene: SKScene {
             gameOver()
             return
         }
-        GameValues.timerCount -= 1
 
         if (GameValues.score >= GameValues.bestScore) {
             highScoreLabel?.text = "High Score: \(GameValues.score)"
         }
+
+        GameValues.timerCount -= 1
+
         timerLabel?.text = "Timer: \(GameValues.timerCount)"
 
         removeBubbleFromScreen()
@@ -92,9 +94,9 @@ class GameScene: SKScene {
                 let randomIndex = Int(arc4random_uniform(UInt32(bubbles.count - 1)))
                 let randomBubble = bubbles[randomIndex]
 
-                randomBubble.removeFromParent()
+                removeBubbleWithAnimation(bubble: randomBubble)
 
-
+                //randomBubble.removeFromParent()
                 bubbles.remove(at: randomIndex)
             }
 		}
@@ -208,6 +210,8 @@ class GameScene: SKScene {
         }
         bubbles.remove(at: index)
 
+
+
         calculateScore(node)
 
         node.physicsBody = nil
@@ -267,6 +271,7 @@ class GameScene: SKScene {
     }
 
     func calculateScore(_ node: SKSpriteNode) {
+
         if (node.name == "0") {
 			calculateCombo(node)
             GameValues.score += 1 * comboMultiplication
@@ -299,6 +304,17 @@ class GameScene: SKScene {
         }
         currentlyClickedBubbleName = node.name!
     }
+
+    func removeBubbleWithAnimation( bubble: SKSpriteNode) {
+        let fadeOut = SKAction.fadeOut(withDuration: 0.2)
+        let scaleUp = SKAction.scale(by: 1.5, duration: 0.2)
+        scaleUp.timingMode = .easeOut
+        let group = SKAction.group([fadeOut, scaleUp])
+
+        let sequence = SKAction.sequence([group, SKAction.removeFromParent()])
+        bubble.run(sequence)
+    }
+
 }
 
 
