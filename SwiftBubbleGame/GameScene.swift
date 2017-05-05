@@ -14,7 +14,10 @@ import Foundation
 struct GameValues {
 	static var score: Double = 0;
 	static var bestScore: Double = 0;
-	static var userName = "";
+	static var userName: String = "";
+    static var gameSeconds: Int! = 60
+    static var timerCount: Int = 10
+    static var maxNumberOfBubbles: Int = 15
 }
 
 class GameScene: SKScene {
@@ -25,18 +28,13 @@ class GameScene: SKScene {
     //keeps the list of all bubbles images (textures) I have in assests folder
     var bubbleTextures = [SKTexture]()
 
-    var maximumNumber = 1
     var bubbles = [SKSpriteNode]()
     var timerLabel: SKLabelNode?
     var scoreLabel: SKLabelNode?
-    var score: Double = 0
-    var bestScore: Double = 0
+    var highScoreLabel: SKLabelNode?
     var timer: Timer!
-    var timerCount = 10
-    var userName: String! = ""
-    var maxNumberOfBubbles: Int = 15
 
-	var previouslyClickedBubbleName = ""
+
 	var currentlyClickedBubbleName = ""
 	var comboMultiplication: Double = 1;
     var numberOfTheSameBubblesClicked = 0
@@ -62,7 +60,7 @@ class GameScene: SKScene {
         physicsWorld.gravity = CGVector.zero
 
 
-		createRandomBubbles(maxNumberOfBubbles: maxNumberOfBubbles)
+		createRandomBubbles(maxNumberOfBubbles: GameValues.maxNumberOfBubbles)
 		
 		createLabels()
 
@@ -70,15 +68,19 @@ class GameScene: SKScene {
     }
 
     func updateTimer() {
-        if (timerCount == 0) {
+        if (GameValues.timerCount == 0) {
             gameOver()
             return
         }
-        timerCount -= 1
-        timerLabel?.text = "Timer: \(timerCount)"
+        GameValues.timerCount -= 1
+
+        if (GameValues.score >= GameValues.bestScore) {
+            highScoreLabel?.text = "High Score: \(GameValues.score)"
+        }
+        timerLabel?.text = "Timer: \(GameValues.timerCount)"
 
         removeBubbleFromScreen()
-        createRandomBubbles(maxNumberOfBubbles: maxNumberOfBubbles)
+        createRandomBubbles(maxNumberOfBubbles: GameValues.maxNumberOfBubbles)
     }
 
     func removeBubbleFromScreen() {
@@ -89,7 +91,10 @@ class GameScene: SKScene {
             if(bubbles.count > 0) {
                 let randomIndex = Int(arc4random_uniform(UInt32(bubbles.count - 1)))
                 let randomBubble = bubbles[randomIndex]
+
                 randomBubble.removeFromParent()
+
+
                 bubbles.remove(at: randomIndex)
             }
 		}
@@ -116,19 +121,13 @@ class GameScene: SKScene {
                 scene.scaleMode = .aspectFill
 
                 gameOverScene = scene as! GameOverScene
-                gameOverScene.score = self.score
-                gameOverScene.userName = self.userName
-                gameOverScene.bestScore = self.bestScore
-                gameOverScene.userName = self.userName
 
-                //var scene = GameOverScene(gameScene: self)
+
                 // Present the scene
                 view.presentScene(scene)
             }
 
             view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
         }
     }
 	
@@ -138,16 +137,20 @@ class GameScene: SKScene {
         //creates a timer label
 		timerLabel?.fontName = "Chalkduster"
 		timerLabel?.fontSize = 45
-        timerLabel?.text = "Timer: \(timerCount)"
+        timerLabel?.text = "Timer: \(GameValues.timerCount)"
 		//timerLabel?.fontColor = SKColor.green
 
         //creates a score label
         scoreLabel = self.childNode(withName: "scoreLabel") as? SKLabelNode
         scoreLabel?.fontName = "Chalkduster"
         scoreLabel?.fontSize = 45
-        scoreLabel?.text = "Score: \(score)"
+        scoreLabel?.text = "Score: \(GameValues.score)"
         //scoreLabel?.fontColor = SKColor.green
-		
+
+        highScoreLabel = self.childNode(withName: "highScoreLabel") as? SKLabelNode
+        highScoreLabel?.fontName = "Chalkduster"
+        highScoreLabel?.fontSize = 45
+        highScoreLabel?.text = "High Score: \(GameValues.bestScore)"
 	}
 
     func createBubble(with index: Int) {
@@ -230,7 +233,7 @@ class GameScene: SKScene {
 
         if let name = touchedNode.name
         {
-            if name == "timerLabel" || name == "scoreLabel"
+            if name == "timerLabel" || name == "scoreLabel" || name == "highScoreLabel"
             {
                 touchedNode.isUserInteractionEnabled = false
             } else {
@@ -266,21 +269,21 @@ class GameScene: SKScene {
     func calculateScore(_ node: SKSpriteNode) {
         if (node.name == "0") {
 			calculateCombo(node)
-			score += 1 * comboMultiplication
+            GameValues.score += 1 * comboMultiplication
         } else if (node.name == "1") {
             calculateCombo(node)
-            score += 2 * comboMultiplication
+            GameValues.score += 2 * comboMultiplication
         } else if (node.name == "2") {
 			calculateCombo(node)
-            score += 5 * comboMultiplication
+            GameValues.score += 5 * comboMultiplication
         } else if (node.name == "3") {
 			calculateCombo(node)
-            score += 8 * comboMultiplication
+            GameValues.score += 8 * comboMultiplication
         } else if (node.name == "4") {
 			calculateCombo(node)
-            score += 10 * comboMultiplication
+            GameValues.score += 10 * comboMultiplication
         }
-        scoreLabel?.text = "Score: \(score)"
+        scoreLabel?.text = "Score: \(GameValues.score)"
     }
 
     func calculateCombo(_ node: SKSpriteNode) {

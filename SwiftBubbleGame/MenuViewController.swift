@@ -12,13 +12,12 @@ import GameplayKit
 
 class MenuViewController: UIViewController, UITextFieldDelegate {
 	
+	@IBOutlet var mainBackgroundImage: UIImageView!
 	@IBOutlet var settingsView: UIView!
 	@IBOutlet var mainView: SKView!
 	var currentGame: GameScene!
     var gameOverScene: GameOverScene!
-    var userName: String!
-    var numberOfBubblesInGame: Int! = 15
-    var gameSeconds: Int! = 60
+
 	@IBOutlet var nameTextField: UITextField!
 	@IBOutlet var nameLabel: UILabel!
 	@IBOutlet var playButton: UIButton!
@@ -32,18 +31,19 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
 
 	
 	@IBAction func okSettingButtonClicked(_ sender: Any) {
-        self.numberOfBubblesInGame = Int(bubblesSlider.value)
-        print("Number of bubbles in slider: \(bubblesSlider.value)")
-        print("numberOfBubblesInGame \(numberOfBubblesInGame)")
-        self.gameSeconds = Int(gameSlider.value)
-        print("gameSeconds \(gameSeconds)")
-        print("Game seconds in slider : \(gameSlider.value)")
+        GameValues.maxNumberOfBubbles = Int(bubblesSlider.value)
+        print("Number of bubbles in game values: \(GameValues.maxNumberOfBubbles)")
+        numberOfBubblesLabel.text = "Bubbles in game: \(Int(bubblesSlider.value))"
+
+        GameValues.timerCount = Int(gameSlider.value)
+        print("game seconds in game values: \(GameValues.gameSeconds)")
+        gameTimeLabel.text = "Game time: \(Int((gameSlider.value)))"
 
         settingsView.isHidden = true
 	}
 	
 	@IBAction func gameSliderChangedValue(_ sender: Any) {
-        gameTimeLabel.text = "Game time:   \(Int((gameSlider.value)))"
+        gameTimeLabel.text = "Game time: \(Int((gameSlider.value)))"
 
 	}
 
@@ -81,16 +81,10 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
 
                 currentGame = scene as! GameScene
                 currentGame.viewController = self
+                mainBackgroundImage.alpha = 0.3
 
                 //TO_DO: check if name is not empty
-                userName = nameTextField.text
-                print("User name in controller: \(userName)")
-                currentGame.userName = userName
-                currentGame.timerCount = gameSeconds
-                currentGame.maxNumberOfBubbles = numberOfBubblesInGame
-                currentGame.timerCount = gameSeconds
-
-				//GameValues.score
+                GameValues.userName = nameTextField.text!
 				
 				// Present the scene
 				view.presentScene(scene)
@@ -98,9 +92,6 @@ class MenuViewController: UIViewController, UITextFieldDelegate {
 			}
 			
 			view.ignoresSiblingOrder = true
-			
-			view.showsFPS = true
-			view.showsNodeCount = true
 		}
 
         self.settingsButton.isHidden = true

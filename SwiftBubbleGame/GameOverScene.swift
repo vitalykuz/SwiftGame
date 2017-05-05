@@ -11,10 +11,6 @@ import SpriteKit
 class GameOverScene: SKScene {
 
     var currentGame: GameScene!
-
-    public var score: Double = 0
-    var bestScore: Double = 0
-
     var gameOverLabel: SKLabelNode!
     var nameLabel: SKLabelNode!
     var scoreLabel: SKLabelNode!
@@ -23,21 +19,15 @@ class GameOverScene: SKScene {
     var bestResultLabel: SKLabelNode!
     var playAgainButton: SKSpriteNode!
 
-    var userName: String!
-
     override func didMove(to view: SKView) {
-        //print("User name in gameOver: \(userName)")
-
         setUpLabelsAndScores()
-
-        //timerLabel = self.childNode(withName: "timerLabel") as? SKLabelNode
-
     }
 
     func setUpLabelsAndScores() {
+
         nameLabel = self.childNode(withName: "nameLabel") as? SKLabelNode
-        // print("Name in game over in controller: \(viewController.nameLabel.text) ")
-        nameLabel.text = userName
+
+        nameLabel.text = GameValues.userName
 
         gameOverLabel = self.childNode(withName: "gameOverLabel") as? SKLabelNode
 
@@ -49,9 +39,7 @@ class GameOverScene: SKScene {
 
         yourBestLabel = self.childNode(withName: "yourBestLabel") as? SKLabelNode
 
-
         playAgainButton = self.childNode(withName: "playAgainImage") as? SKSpriteNode
-        //playAgainButton.texture = SKTexture(imageNamed: "playAgainImage")
 
         setUpFont(for: nameLabel)
         setUpFont(for: gameOverLabel)
@@ -61,12 +49,12 @@ class GameOverScene: SKScene {
         setUpFont(for: bestResultLabel)
 
 
-        if (score > bestScore) {
-            bestScore = score
+        if (GameValues.score > GameValues.bestScore) {
+            GameValues.bestScore = GameValues.score
         }
 
-        scoreResultLabel.text = String(score)
-        bestResultLabel.text = String(bestScore)
+        scoreResultLabel.text = String(GameValues.score)
+        bestResultLabel.text = String(GameValues.bestScore)
     }
 
     func setUpFont(for label: SKLabelNode ) {
@@ -80,12 +68,6 @@ class GameOverScene: SKScene {
         let positionInScene = touch.location(in: self)
         let touchedNode = self.atPoint(positionInScene)
 
-//        if let name = touchedNode.name {
-//            if name == "playAgainButton" {
-//                print("Play again clicked")
-//            }
-//        }
-
         if let name = touchedNode.name
         {
             if name == "playAgainButton"
@@ -97,17 +79,14 @@ class GameOverScene: SKScene {
                         scene.scaleMode = .aspectFill
 
                         currentGame = scene as! GameScene
-                        currentGame.bestScore = self.bestScore
-                        currentGame.userName = self.userName
-                        // Present the scene
+                        //TO-DO add the option to choose the time when the game is over and need to start again
+                        GameValues.timerCount = 20
+                        GameValues.score = 0
+
                         view.presentScene(scene)
 
                     }
-
                     view.ignoresSiblingOrder = true
-
-                    view.showsFPS = true
-                    view.showsNodeCount = true
                 }
             }
         }

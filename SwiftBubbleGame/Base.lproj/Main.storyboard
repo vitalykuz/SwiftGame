@@ -22,6 +22,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mainBack" translatesAutoresizingMaskIntoConstraints="NO" id="YFc-gu-zId">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="rxe-bc-uZh">
                                 <rect key="frame" x="16" y="378.5" width="343" height="50"/>
                                 <subviews>
@@ -83,7 +87,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ghg-vr-QcI">
                                         <rect key="frame" x="5" y="8" width="283" height="50.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game time: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ZV-lW-9sn">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game time: 60" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ZV-lW-9sn">
                                                 <rect key="frame" x="0.0" y="0.0" width="283" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -103,7 +107,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="oF4-Sk-NiB">
                                         <rect key="frame" x="5" y="73.5" width="283" height="50.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Bubbles: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fG-Zy-ZeT">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Bubbles: 15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fG-Zy-ZeT">
                                                 <rect key="frame" x="0.0" y="0.0" width="283" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
@@ -173,6 +177,7 @@
                         <outlet property="bubblesSlider" destination="l9c-dK-cSD" id="gyD-NG-WRf"/>
                         <outlet property="gameSlider" destination="4a7-RQ-GXu" id="TI0-XE-3fb"/>
                         <outlet property="gameTimeLabel" destination="6ZV-lW-9sn" id="u2e-Yz-b3C"/>
+                        <outlet property="mainBackgroundImage" destination="YFc-gu-zId" id="o3W-5c-xpR"/>
                         <outlet property="mainView" destination="3se-qz-xqx" id="GD8-iF-a3w"/>
                         <outlet property="nameLabel" destination="Xtl-AL-YNi" id="nVR-RK-lKc"/>
                         <outlet property="nameTextField" destination="GKt-42-RdP" id="uf8-qi-Xn9"/>
@@ -185,10 +190,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="24.375" y="33.802816901408448"/>
+            <point key="canvasLocation" x="23.199999999999999" y="33.733133433283363"/>
         </scene>
     </scenes>
     <resources>
+        <image name="mainBack" width="640" height="1136"/>
         <image name="settings" width="800" height="800"/>
         <image name="startButton" width="444" height="202"/>
         <image name="stat" width="512" height="512"/>
